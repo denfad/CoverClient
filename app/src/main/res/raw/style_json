@@ -8,38 +8,6 @@
     ]
   },
   {
-    "stylers": [
-      {
-        "weight": 1.5
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "stylers": [
-      {
-        "weight": 2
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.man_made",
-    "stylers": [
-      {
-        "saturation": 25
-      },
-      {
-        "lightness": -5
-      },
-      {
-        "visibility": "on"
-      },
-      {
-        "weight": 8
-      }
-    ]
-  },
-  {
     "featureType": "landscape.natural.terrain",
     "stylers": [
       {
@@ -51,7 +19,7 @@
     "featureType": "poi.business",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "on"
       }
     ]
   },

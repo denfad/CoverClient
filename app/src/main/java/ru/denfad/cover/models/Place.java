@@ -1,5 +1,8 @@
 package ru.denfad.cover.models;
 
+/*
+* Describes Place model and create getters and setters
+* */
 public class Place {
     private int placeId;
     private String name;

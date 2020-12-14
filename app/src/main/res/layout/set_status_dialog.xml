@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="400dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardCornerRadius="30dp"
+        card_view:cardElevation="4dp"
+        android:backgroundTint="#EEFFFFFF">
+
+    <LinearLayout
+            android:layout_marginVertical="5dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+
+        <RadioGroup
+                android:id="@+id/status_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp">
+
+            <RadioButton
+                    android:text="Есть положительный тест"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/positive_test"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+
+            <RadioButton
+                    android:text="Есть отрицательный тест"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/negative_test"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+
+            <RadioButton
+                    android:text="Ожидание результатов"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wait"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+
+            <RadioButton
+                    android:text="Потенциально контактировал"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/potential_contact"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+
+            <RadioButton
+                    android:text="Контактировал с больным"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/contact"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+
+            <RadioButton
+                    android:text="Есть симптомы"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/symptoms"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"/>
+        </RadioGroup>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

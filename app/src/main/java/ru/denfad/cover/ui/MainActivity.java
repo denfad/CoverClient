@@ -1,10 +1,11 @@
-package ru.denfad.cover;
+package ru.denfad.cover.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -13,7 +14,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,26 +27,52 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.JsonObject;
+import com.google.maps.android.PolyUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.denfad.cover.R;
 import ru.denfad.cover.models.Place;
+import ru.denfad.cover.network.ApiService;
 import ru.denfad.cover.network.NetworkService;
 import ru.denfad.cover.services.DbService;
+import ru.denfad.cover.services.JSONParser;
+/*
+* Main screen with a map
+*  */
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCircleClickListener, GoogleMap.OnMapClickListener {
 
-    MapFragment mapFragment;
+    private MapFragment mapFragment;
     private TextView name;
+    private ImageButton profileButton;
     private GoogleMap map;
     private BottomSheetBehavior mBottomSheetBehavior;
+    private List<PatternItem> pattern = Arrays.asList(new Dot(),new Gap(20));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +87,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //bottomsheet
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
         name = findViewById(R.id.name);
+
+        //profile button
+        profileButton = findViewById(R.id.profile);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
 
         //generate location manager
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
@@ -95,7 +134,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return false;
     }
 
+    //Setting up the map
     @Override
+
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(56.857159, 35.914097)));
@@ -105,13 +146,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    //Настройки карты
+    //Sets settings of the map
     public void setUpMap() {
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.style_json));
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         map.setOnMarkerClickListener(this);
         map.setOnCircleClickListener(this);
         map.setOnMapClickListener(this);
@@ -124,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-
+    //Generates areas of infection
     public void generateArea(){
         NetworkService.getInstance()
                 .getJSONApi()
@@ -133,9 +171,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
                         for(Place p: response.body()) {
-                            Toast.makeText(getApplicationContext(),p.getName(),Toast.LENGTH_SHORT).show();
                             CircleOptions options = new CircleOptions().center(new LatLng(p.getX_cor(), p.getY_cor()))
-                                    .radius(60)
+                                    .radius(90)
                                     .strokeWidth(0)
                                     .clickable(true);
 
@@ -151,13 +188,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 });
-    }
+        ApiService.getInstance()
+                .getJSONApi()
+                .getPlaces("56.857159, 35.914097", "56.840388, 35.858717","transit","AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            List<LatLng> cor = JSONParser.getCoordinates(response.body().string());
+                            map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(pattern));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+    }
+    // Activates after click on a circle
     @Override
     public void onCircleClick(Circle circle) {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         map.moveCamera(CameraUpdateFactory.zoomTo(17));
         map.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getPlace(circle.getCenter().latitude, circle.getCenter().longitude)
+                .enqueue(new Callback<Place>() {
+                    @Override
+                    public void onResponse(Call<Place> call, Response<Place> response) {
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        name.setText(response.body().getName()+"\n"+response.body().getType());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Place> call, Throwable t) {
+
+                    }
+                });
     }
 
     @Override
