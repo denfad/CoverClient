@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -61,6 +62,8 @@ import ru.denfad.cover.network.ApiService;
 import ru.denfad.cover.network.NetworkService;
 import ru.denfad.cover.services.DbService;
 import ru.denfad.cover.services.JSONParser;
+
+import static android.location.LocationManager.GPS_PROVIDER;
 /*
 * Main screen with a map
 *  */
@@ -70,9 +73,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private TextView name;
     private ImageButton profileButton;
+    private ImageButton searchButton;
+    private ImageButton actionButton;
+    private LocationManager locationManager;
     private GoogleMap map;
     private BottomSheetBehavior mBottomSheetBehavior;
     private List<PatternItem> pattern = Arrays.asList(new Dot(),new Gap(20));
+    private double x,y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,18 +106,50 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        //search button
+        searchButton= findViewById(R.id.search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            }
+        });
+
+        //action button
+        actionButton = findViewById(R.id.actions);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ActionsActivity.class));
+            }
+        });
+
+
+
         //generate location manager
-        LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         assert locationManager != null;
+        locationManager.requestLocationUpdates(GPS_PROVIDER, 0, 0, this);
+        System.out.println("Локация определена!");
 
 
+        //route manager
+        try {
+            routeManager(getIntent());
+        }
+        catch (NullPointerException e){
+            e.fillInStackTrace();
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        x= location.getLatitude();
+        y = location.getLongitude();
+        System.out.println(x+" "+y);
 
     }
 
@@ -188,38 +227,66 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 });
-        ApiService.getInstance()
-                .getJSONApi()
-                .getPlaces("56.857159, 35.914097", "56.840388, 35.858717","transit","AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            List<LatLng> cor = JSONParser.getCoordinates(response.body().string());
-                            map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(pattern));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
     }
     // Activates after click on a circle
     @Override
     public void onCircleClick(Circle circle) {
-        map.moveCamera(CameraUpdateFactory.zoomTo(17));
-        map.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
+       selectPlaceOnMap(circle.getCenter());
+    }
+
+    public void routeManager(Intent intent) throws NullPointerException{
+        if(!intent.getStringExtra("place").equals("")){
+            NetworkService.getInstance()
+                    .getJSONApi()
+                    .findNearPlace(56.857904999999995,35.91758166666667,intent.getStringExtra("place"))
+                    .enqueue(new Callback<Place>() {
+                        @Override
+                        public void onResponse(Call<Place> call, Response<Place> response) {
+                            Place p = response.body();
+                            ApiService.getInstance()
+                                    .getJSONApi()
+                                    .getPlaces("56.857904999999995, 35.91758166666667", p.getX_cor()+", "+p.getY_cor(),intent.getStringExtra("type"),"AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
+                                    .enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            try {
+                                                System.out.println(call.request().url().toString());
+                                                List<LatLng> cor = JSONParser.getCoordinates(response.body().string());
+                                                selectPlaceOnMap(new LatLng(p.getX_cor(), p.getY_cor()));
+                                                map.moveCamera(CameraUpdateFactory.zoomTo(14));
+                                                map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(p.getX_cor(), p.getY_cor())));
+                                                map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(pattern).color(JSONParser.getColor(intent.getStringExtra("type"))));
+                                                map.addMarker(new MarkerOptions().position(new LatLng(p.getX_cor(), p.getY_cor())).title(p.getName()+"\n"+p.getType()));
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                        }
+                                    });
+                        }
+
+                        @Override
+                        public void onFailure(Call<Place> call, Throwable t) {
+
+                        }
+                    });
+        }
+    }
+
+    public void selectPlaceOnMap(LatLng latLng){
+        map.moveCamera(CameraUpdateFactory.zoomTo(16));
+        map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         NetworkService.getInstance()
                 .getJSONApi()
-                .getPlace(circle.getCenter().latitude, circle.getCenter().longitude)
+                .getPlace(latLng.latitude, latLng.longitude)
                 .enqueue(new Callback<Place>() {
                     @Override
                     public void onResponse(Call<Place> call, Response<Place> response) {
-                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         name.setText(response.body().getName()+"\n"+response.body().getType());
                     }
 

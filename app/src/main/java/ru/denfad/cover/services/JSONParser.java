@@ -1,5 +1,7 @@
 package ru.denfad.cover.services;
 
+import android.graphics.Color;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -23,5 +25,18 @@ public class JSONParser {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public static int getColor(String type){
+        switch (type){
+            case "driving":
+                return Color.GREEN;
+            case "walking":
+                return Color.BLUE;
+            case "transit":
+                return Color.RED;
+            default:
+                return Color.YELLOW;
+        }
     }
 }

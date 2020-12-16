@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:orientation="vertical">
+
+    <TextView
+            android:text="Как поедем?"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="60dp"
+            android:padding="6dp"
+            android:textSize="38sp"
+            android:elevation="2dp"
+            android:background="@drawable/menu_rectangle"
+            android:textAlignment="center" />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/safely"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:text="Безопасно"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_rectangle"
+            android:layout_marginHorizontal="20dp"
+            android:padding="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/on_bus"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="На автобусе"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_rectangle"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back"
+            android:textSize="30sp"
+            android:text="Назад"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_rectangle"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="60dp"/>
+
+
+</LinearLayout>

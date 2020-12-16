@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Cover</string>
+
+    <string-array name="types">
+        <item>Магазин</item>
+        <item>Больница</item>
+    </string-array>
 </resources>

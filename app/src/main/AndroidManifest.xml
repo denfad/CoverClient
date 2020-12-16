@@ -23,16 +23,21 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Cover">
         <activity android:name=".ui.MainActivity">
-
-        </activity>
-        <activity android:name=".ui.ProfileActivity" />
-        <activity android:name=".ui.RegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.RegistrationActivity">
+
+        </activity>
+        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.ActionsActivity" />
+        <activity android:name=".ui.route.SafelyRouteTypeActivity" />
+        <activity android:name=".ui.route.RouteTypeActivity" />
+        <activity android:name=".ui.route.RoutePlaceActivity" />
 
         <meta-data
                 android:name="com.google.android.gms.version"

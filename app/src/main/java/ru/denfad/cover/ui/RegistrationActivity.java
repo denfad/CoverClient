@@ -5,10 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ru.denfad.cover.R;
+import ru.denfad.cover.models.Person;
+import ru.denfad.cover.network.NetworkService;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -32,7 +38,22 @@ public class RegistrationActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                NetworkService.getInstance()
+                        .getJSONApi()
+                        .registPerson(new Person(login.getText().toString(), password.getText().toString(), name.getText().toString(),Integer.valueOf(age.getText().toString())))
+                        .enqueue(new Callback<Person>() {
+                            @Override
+                            public void onResponse(Call<Person> call, Response<Person> response) {
+                                Toast.makeText(getApplicationContext(),"Добро пожаловать в Caver "+response.body().getName(), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                            }
+
+                            @Override
+                            public void onFailure(Call<Person> call, Throwable t) {
+                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                            }
+                        });
+
             }
         });
     }

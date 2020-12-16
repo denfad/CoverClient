@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView status;
     private Button changeState;
     private Button back;
+    private Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Person> call, Response<Person> response) {
                         fillViews(response.body());
+                        person = response.body();
                     }
 
                     @Override
@@ -83,6 +86,23 @@ public class ProfileActivity extends AppCompatActivity {
             group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton button = findViewById(checkedId);
+                    person.setStatus(button.getText().toString());
+                    NetworkService.getInstance()
+                            .getJSONApi()
+                            .updatePerson(person)
+                            .enqueue(new Callback<Person>() {
+                                @Override
+                                public void onResponse(Call<Person> call, Response<Person> response) {
+                                    fillViews(response.body());
+                                    SetStatusDialog.this.cancel();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Person> call, Throwable t) {
+                                    SetStatusDialog.this.cancel();
+                                }
+                            });
                 }
             });
         }
