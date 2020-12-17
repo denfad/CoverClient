@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/positive_test"
                     android:layout_weight="1"
+                    android:fontFamily="@font/medium"
                     android:paddingHorizontal="20dp"
                     android:textColor="@color/black"
                     android:textSize="25sp"/>
@@ -35,6 +36,7 @@
             <RadioButton
                     android:text="Есть отрицательный тест"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/medium"
                     android:layout_height="wrap_content"
                     android:id="@+id/negative_test"
                     android:layout_weight="1"
@@ -46,6 +48,7 @@
                     android:text="Ожидание результатов"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
                     android:id="@+id/wait"
                     android:layout_weight="1"
                     android:paddingHorizontal="20dp"
@@ -56,6 +59,7 @@
                     android:text="Потенциально контактировал"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
                     android:id="@+id/potential_contact"
                     android:layout_weight="1"
                     android:paddingHorizontal="20dp"
@@ -68,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/contact"
                     android:layout_weight="1"
+                    android:fontFamily="@font/medium"
                     android:paddingHorizontal="20dp"
                     android:textColor="@color/black"
                     android:textSize="25sp"/>
@@ -77,6 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/symptoms"
+                    android:fontFamily="@font/medium"
                     android:layout_weight="1"
                     android:paddingHorizontal="20dp"
                     android:textColor="@color/black"

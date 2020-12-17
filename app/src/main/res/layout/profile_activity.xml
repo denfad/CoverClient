@@ -17,6 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:fontFamily="@font/regular"
                 android:layout_margin="20dp"
                 android:padding="3dp"
                 android:textSize="40sp"
@@ -51,6 +52,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#B5000000"
+                            android:fontFamily="@font/medium"
                             android:textSize="30sp"
                             android:textAlignment="textStart" />
 
@@ -60,6 +62,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:id="@+id/status"
+                            android:fontFamily="@font/medium"
                             android:textSize="25sp"
                             android:textAlignment="textStart" />
                 </LinearLayout>
@@ -67,6 +70,7 @@
                 <Button
                         android:id="@+id/change_status"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Изменить" />
@@ -95,6 +99,7 @@
                         android:text="Часто посещаемые места:"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/medium"
                         android:textColor="@color/black"
                         android:padding="3dp"
                         android:textSize="25sp"
@@ -110,6 +115,7 @@
                         android:id="@+id/add_place"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
+                        android:fontFamily="@font/medium"
                         android:layout_height="wrap_content"
                         android:text="Добавить место" />
             </LinearLayout>
@@ -119,6 +125,7 @@
                 android:layout_marginVertical="10dp"
                 android:id="@+id/back"
                 android:layout_gravity="center"
+                android:fontFamily="@font/medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Назад" />

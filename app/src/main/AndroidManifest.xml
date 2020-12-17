@@ -38,6 +38,8 @@
         <activity android:name=".ui.route.SafelyRouteTypeActivity" />
         <activity android:name=".ui.route.RouteTypeActivity" />
         <activity android:name=".ui.route.RoutePlaceActivity" />
+        <activity android:name=".ui.advice.AdvicesActivity" />
+        <activity android:name=".ui.CallAmbulanceActivity" />
 
         <meta-data
                 android:name="com.google.android.gms.version"

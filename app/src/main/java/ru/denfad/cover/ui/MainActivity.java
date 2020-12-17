@@ -72,13 +72,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private MapFragment mapFragment;
     private TextView name;
+    private TextView routeInformation;
     private ImageButton profileButton;
     private ImageButton searchButton;
     private ImageButton actionButton;
     private LocationManager locationManager;
     private GoogleMap map;
     private BottomSheetBehavior mBottomSheetBehavior;
-    private List<PatternItem> pattern = Arrays.asList(new Dot(),new Gap(20));
     private double x,y;
 
     @Override
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
         name = findViewById(R.id.name);
+        routeInformation = findViewById(R.id.route_information);
 
         //profile button
         profileButton = findViewById(R.id.profile);
@@ -255,8 +256,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 selectPlaceOnMap(new LatLng(p.getX_cor(), p.getY_cor()));
                                                 map.moveCamera(CameraUpdateFactory.zoomTo(14));
                                                 map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(p.getX_cor(), p.getY_cor())));
-                                                map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(pattern).color(JSONParser.getColor(intent.getStringExtra("type"))));
+                                                map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(JSONParser.getPattern(intent.getStringExtra("type"))).color(getResources().getColor(R.color.route)));
                                                 map.addMarker(new MarkerOptions().position(new LatLng(p.getX_cor(), p.getY_cor())).title(p.getName()+"\n"+p.getType()));
+                                                routeInformation.setText(JSONParser.getRouteInformation(response.body().string()));
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.denfad.cover.R;
+import ru.denfad.cover.ui.advice.AdvicesActivity;
 import ru.denfad.cover.ui.route.RoutePlaceActivity;
 
 public class ActionsActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class ActionsActivity extends AppCompatActivity {
     private  Button backButton;
     private Button placeButton;
     private Button adviceButton;
+    private Button callButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,16 @@ public class ActionsActivity extends AppCompatActivity {
             }
         });
 
+        callButton = findViewById(R.id.ambulance);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActionsActivity.this, CallAmbulanceActivity.class));
+            }
+        });
+
+
+
         placeButton = findViewById(R.id.get_place);
         placeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +52,7 @@ public class ActionsActivity extends AppCompatActivity {
         adviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActionsActivity.this, AdvicesActivity.class));
             }
         });
     }

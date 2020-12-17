@@ -11,6 +11,7 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:fontFamily="@font/regular"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="60dp"
             android:padding="6dp"
@@ -29,6 +30,7 @@
             android:background="@drawable/menu_rectangle"
             android:layout_marginHorizontal="20dp"
             android:padding="10dp"
+            android:fontFamily="@font/medium"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="20dp"/>
 
@@ -38,6 +40,7 @@
             android:layout_weight="1"
             android:padding="2dp"
             android:text="На автобусе"
+            android:fontFamily="@font/medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_rectangle"
@@ -51,6 +54,7 @@
             android:text="Назад"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
             android:background="@drawable/edit_rectangle"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="60dp"

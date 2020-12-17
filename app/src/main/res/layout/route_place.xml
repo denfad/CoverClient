@@ -9,6 +9,7 @@
             android:id="@+id/to_hospital"
             android:textSize="30sp"
             android:layout_weight="1"
+            android:fontFamily="@font/medium"
             android:text="Доехать до клиники"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
             android:layout_weight="1"
             android:padding="2dp"
             android:text="Доехать до аптеки"
+            android:fontFamily="@font/medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_rectangle"
@@ -40,6 +42,7 @@
             android:background="@drawable/edit_rectangle"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="60dp"
+            android:fontFamily="@font/regular"
             android:layout_marginBottom="60dp"/>
 
 
