@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.denfad.cover.DAO.PrimitiveDAO;
 import ru.denfad.cover.R;
 import ru.denfad.cover.models.Person;
 import ru.denfad.cover.network.NetworkService;
@@ -35,9 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
         status = findViewById(R.id.status);
         changeState = findViewById(R.id.change_status);
         back = findViewById(R.id.back);
+
+        person = PrimitiveDAO.getInstance().person;
+
         NetworkService.getInstance()
                 .getJSONApi()
-                .authPerson("login", "password")
+                .authPerson(person.getLogin(), person.getPassword())
                 .enqueue(new Callback<Person>() {
                     @Override
                     public void onResponse(Call<Person> call, Response<Person> response) {

@@ -23,6 +23,9 @@ public interface JSONPlaceHolderNetwork {
     @POST("/places/")
     public Call<Place> getPlace(@Query("x") double x, @Query("y") double y);
 
+    @GET("/places/type")
+    public Call<List<Place>> getPlacesByType(@Query("type") String type);
+
     @POST("/persons/auth")
     public Call<Person> authPerson(@Query("login") String login, @Query("password") String password);
 

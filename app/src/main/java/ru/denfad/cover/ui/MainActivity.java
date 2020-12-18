@@ -56,6 +56,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.denfad.cover.DAO.PrimitiveDAO;
 import ru.denfad.cover.R;
 import ru.denfad.cover.models.Place;
 import ru.denfad.cover.network.ApiService;
@@ -148,10 +149,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
-        x= location.getLatitude();
-        y = location.getLongitude();
-        System.out.println(x+" "+y);
-
+        PrimitiveDAO.getInstance().x  = location.getLatitude();
+        PrimitiveDAO.getInstance().y = location.getLongitude();
     }
 
     @Override
@@ -239,14 +238,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(!intent.getStringExtra("place").equals("")){
             NetworkService.getInstance()
                     .getJSONApi()
-                    .findNearPlace(56.857904999999995,35.91758166666667,intent.getStringExtra("place"))
+                    .findNearPlace(PrimitiveDAO.getInstance().x,PrimitiveDAO.getInstance().y,intent.getStringExtra("place"))
                     .enqueue(new Callback<Place>() {
                         @Override
                         public void onResponse(Call<Place> call, Response<Place> response) {
                             Place p = response.body();
                             ApiService.getInstance()
                                     .getJSONApi()
-                                    .getPlaces("56.857904999999995, 35.91758166666667", p.getX_cor()+", "+p.getY_cor(),intent.getStringExtra("type"),"AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
+                                    .getPlaces(PrimitiveDAO.getInstance().x + ", "+PrimitiveDAO.getInstance().y, p.getX_cor()+", "+p.getY_cor(),intent.getStringExtra("type"),"AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
                                     .enqueue(new Callback<ResponseBody>() {
                                         @Override
                                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -254,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 System.out.println(call.request().url().toString());
                                                 List<LatLng> cor = JSONParser.getCoordinates(response.body().string());
                                                 selectPlaceOnMap(new LatLng(p.getX_cor(), p.getY_cor()));
-                                                map.moveCamera(CameraUpdateFactory.zoomTo(14));
+                                                map.moveCamera(CameraUpdateFactory.zoomTo(15));
                                                 map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(p.getX_cor(), p.getY_cor())));
                                                 map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(JSONParser.getPattern(intent.getStringExtra("type"))).color(getResources().getColor(R.color.route)));
                                                 map.addMarker(new MarkerOptions().position(new LatLng(p.getX_cor(), p.getY_cor())).title(p.getName()+"\n"+p.getType()));

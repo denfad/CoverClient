@@ -1,5 +1,8 @@
 package ru.denfad.cover.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Person {
     private int id;
     private String login;
@@ -8,6 +11,7 @@ public class Person {
     private Integer age;
     private String address;
     private String status;
+    private List<Place> places = new ArrayList<>();
 
     public Person() {
     }
@@ -73,5 +77,17 @@ public class Person {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
+
+    public void addPlace(Place p){
+        this.places.add(p);
     }
 }

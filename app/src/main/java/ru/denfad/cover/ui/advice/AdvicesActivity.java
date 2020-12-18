@@ -26,11 +26,11 @@ public class AdvicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.advices_activity);
 
-        data.add("asfq");
-        data.add("awfesfq");
-        data.add("asweffq");
-        data.add("aswetfgfq");
-        data.add("aswgrfq");
+        data.add("Соблюдайте правила гигиены рук. Часто мойте руки водой с мылом или обрабатывайте их  антисептиком для рук.");
+        data.add("Держитесь на безопасном расстоянии от чихающих или кашляющих людей.");
+        data.add("Носите маску, когда находитесь в окружении других людей.");
+        data.add("Не прикасайтесь руками к глазам, рту или носу.");
+
         ViewPager2 pager = findViewById(R.id.view_pager);
         pager.setAdapter(new ViewPagerAdapter(data));
         back = findViewById(R.id.back);
