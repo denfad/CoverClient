@@ -1,21 +1,21 @@
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardCornerRadius="30dp"
         android:layout_margin="20dp"
         android:backgroundTint="@color/white"
-        android:padding="20dp"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:padding="20dp">
 
-        <TextView
-                android:id="@+id/advice_text"
-                android:text="Держитесь на безопасном расстоянии от чихающих или кашляющих людей."
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/medium"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:padding="20dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+    <TextView
+            android:id="@+id/advice_text"
+            android:text="Держитесь на безопасном расстоянии от чихающих или кашляющих людей."
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:padding="20dp"
+            android:gravity="center"
+            android:textAlignment="center" />
 </androidx.cardview.widget.CardView>

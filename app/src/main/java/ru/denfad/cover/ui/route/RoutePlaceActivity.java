@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ru.denfad.cover.R;
 
-public class RoutePlaceActivity  extends AppCompatActivity {
+public class RoutePlaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class RoutePlaceActivity  extends AppCompatActivity {
         toChemistry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent = new Intent(RoutePlaceActivity.this, RouteTypeActivity.class);
-                intent.putExtra("place","Аптека");
+                Intent intent = new Intent(RoutePlaceActivity.this, RouteTypeActivity.class);
+                intent.putExtra("place", "Аптека");
                 startActivity(intent);
             }
         });
@@ -30,8 +30,8 @@ public class RoutePlaceActivity  extends AppCompatActivity {
         toHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent = new Intent(RoutePlaceActivity.this, RouteTypeActivity.class);
-                intent.putExtra("place","Больница");
+                Intent intent = new Intent(RoutePlaceActivity.this, RouteTypeActivity.class);
+                intent.putExtra("place", "Больница");
                 startActivity(intent);
             }
         });

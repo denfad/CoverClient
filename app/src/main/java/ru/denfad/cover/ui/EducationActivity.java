@@ -49,18 +49,20 @@ public class EducationActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabDots);
         new TabLayoutMediator(tabLayout, pager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     }
                 }).attach();
     }
 
-    private class ViewPagerAdapter extends RecyclerView.Adapter<EducationActivity.PagerVH>{
+    private class ViewPagerAdapter extends RecyclerView.Adapter<EducationActivity.PagerVH> {
 
         private List<Integer> advices;
 
-        ViewPagerAdapter(List<Integer> advices){
+        ViewPagerAdapter(List<Integer> advices) {
             this.advices = advices;
         }
+
         @NonNull
         @Override
         public EducationActivity.PagerVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -80,9 +82,10 @@ public class EducationActivity extends AppCompatActivity {
         }
     }
 
-    private class PagerVH extends RecyclerView.ViewHolder{
+    private class PagerVH extends RecyclerView.ViewHolder {
 
         public ImageView advice;
+
         public PagerVH(@NonNull View itemView) {
             super(itemView);
             advice = itemView.findViewById(R.id.image);

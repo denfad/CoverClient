@@ -24,6 +24,7 @@ public class AdvicesActivity extends AppCompatActivity {
 
     private List<String> data = new ArrayList<>();
     private Button back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,18 +48,20 @@ public class AdvicesActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabDots);
         new TabLayoutMediator(tabLayout, pager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     }
                 }).attach();
     }
 
-    private class ViewPagerAdapter extends RecyclerView.Adapter<PagerVH>{
+    private class ViewPagerAdapter extends RecyclerView.Adapter<PagerVH> {
 
         private List<String> advices;
 
-        ViewPagerAdapter(List<String> advices){
+        ViewPagerAdapter(List<String> advices) {
             this.advices = advices;
         }
+
         @NonNull
         @Override
         public PagerVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,9 +81,10 @@ public class AdvicesActivity extends AppCompatActivity {
         }
     }
 
-    private class PagerVH extends RecyclerView.ViewHolder{
+    private class PagerVH extends RecyclerView.ViewHolder {
 
         public TextView advice;
+
         public PagerVH(@NonNull View itemView) {
             super(itemView);
             advice = itemView.findViewById(R.id.advice_text);

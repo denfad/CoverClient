@@ -5,21 +5,20 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/place_text"
-                android:paddingHorizontal="25dp"
-                android:paddingVertical="10dp"
-                android:text="уууууууууууу"
-                android:textColor="#505050"
-                android:textSize="20sp"
-                android:fontFamily="@font/medium"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:clickable="true"
-                android:focusable="true" />
-
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/place_text"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="10dp"
+            android:text="уууууууууууу"
+            android:textColor="#505050"
+            android:textSize="20sp"
+            android:fontFamily="@font/medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:clickable="true"
+            android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
                         .enqueue(new Callback<Person>() {
                             @Override
                             public void onResponse(Call<Person> call, Response<Person> response) {
-                                Toast.makeText(getApplicationContext(),"Статус обновлен", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Статус обновлен", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         });
 
-                if(checkedId == R.id.positive_test || checkedId == R.id.contact || checkedId == R.id.symptoms){
+                if (checkedId == R.id.positive_test || checkedId == R.id.contact || checkedId == R.id.symptoms) {
                     startActivity(new Intent(ProfileActivity.this, ActionsActivity.class));
                 }
             }
@@ -103,8 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
             }
         });

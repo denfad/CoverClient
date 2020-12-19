@@ -41,12 +41,12 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 NetworkService.getInstance()
                         .getJSONApi()
-                        .registPerson(new Person(login.getText().toString(), password.getText().toString(), name.getText().toString(),Integer.valueOf(age.getText().toString())))
+                        .registPerson(new Person(login.getText().toString(), password.getText().toString(), name.getText().toString(), Integer.valueOf(age.getText().toString())))
                         .enqueue(new Callback<Person>() {
                             @Override
                             public void onResponse(Call<Person> call, Response<Person> response) {
                                 PrimitiveDAO.getInstance().person = response.body();
-                                Toast.makeText(getApplicationContext(),"Добро пожаловать в Caver "+response.body().getName(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Добро пожаловать в Caver " + response.body().getName(), Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, EducationActivity.class));
                             }
 

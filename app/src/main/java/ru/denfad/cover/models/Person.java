@@ -87,7 +87,7 @@ public class Person {
         this.places = places;
     }
 
-    public void addPlace(Place p){
+    public void addPlace(Place p) {
         this.places.add(p);
     }
 }

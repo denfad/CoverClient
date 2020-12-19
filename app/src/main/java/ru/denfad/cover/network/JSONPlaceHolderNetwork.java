@@ -19,6 +19,7 @@ public interface JSONPlaceHolderNetwork {
     //Returns all places in DB
     @GET("/places/")
     public Call<List<Place>> getPlaces();
+
     // Returns the place on a specific coordinates
     @POST("/places/")
     public Call<Place> getPlace(@Query("x") double x, @Query("y") double y);

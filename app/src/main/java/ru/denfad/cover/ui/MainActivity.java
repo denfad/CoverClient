@@ -46,8 +46,8 @@ import ru.denfad.cover.services.JSONParser;
 
 import static android.location.LocationManager.GPS_PROVIDER;
 /*
-* Main screen with a map
-*  */
+ * Main screen with a map
+ *  */
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCircleClickListener, GoogleMap.OnMapClickListener {
 
@@ -61,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap map;
     private BottomSheetBehavior mBottomSheetBehavior;
     private static Map<String, Integer> imageMapPlace = new HashMap<>();
-    private double x,y;
+    private double x, y;
 
     static {
-        imageMapPlace.put("Магазин",R.drawable.ic_baseline_shopping_basket_24);
-        imageMapPlace.put("Аптека",R.drawable.ic_baseline_local_pharmacy_24);
-        imageMapPlace.put("Больница",R.drawable.ic_baseline_local_hospital_24);
-        imageMapPlace.put("Гос. учреждение",R.drawable.ic_baseline_account_balance_24);
-        imageMapPlace.put("Школа",R.drawable.ic_baseline_school_24);
+        imageMapPlace.put("Магазин", R.drawable.ic_baseline_shopping_basket_24);
+        imageMapPlace.put("Аптека", R.drawable.ic_baseline_local_pharmacy_24);
+        imageMapPlace.put("Больница", R.drawable.ic_baseline_local_hospital_24);
+        imageMapPlace.put("Гос. учреждение", R.drawable.ic_baseline_account_balance_24);
+        imageMapPlace.put("Школа", R.drawable.ic_baseline_school_24);
 
     }
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         //search button
-        searchButton= findViewById(R.id.search);
+        searchButton = findViewById(R.id.search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-
         //generate location manager
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -131,15 +130,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //route manager
         try {
             routeManager(getIntent());
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.fillInStackTrace();
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        PrimitiveDAO.getInstance().x  = location.getLatitude();
+        PrimitiveDAO.getInstance().x = location.getLatitude();
         PrimitiveDAO.getInstance().y = location.getLongitude();
     }
 
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = googleMap;
         setUpMap();
         generateArea();
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.857730, 35.915329),12));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.857730, 35.915329), 12));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -190,8 +188,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
     //Generates areas of infection
-    public void generateArea(){
+    public void generateArea() {
         Log.d("generate", "generate");
         NetworkService.getInstance()
                 .getJSONApi()
@@ -199,49 +198,47 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .enqueue(new Callback<List<Place>>() {
                     @Override
                     public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
-                        for(Place p: response.body()) {
+                        for (Place p : response.body()) {
                             CircleOptions options = new CircleOptions().center(new LatLng(p.getX_cor(), p.getY_cor()))
                                     .radius(90)
                                     .strokeWidth(0)
                                     .clickable(true);
 
-                            if(p.getCoefficient()<0.33) options.fillColor(getResources().getColor(R.color.caution));
-                            else if(p.getCoefficient()>=0.33 && p.getCoefficient()<=0.66) options.fillColor(getResources().getColor(R.color.warring));
+                            if (p.getCoefficient() < 0.33)
+                                options.fillColor(getResources().getColor(R.color.caution));
+                            else if (p.getCoefficient() >= 0.33 && p.getCoefficient() <= 0.66)
+                                options.fillColor(getResources().getColor(R.color.warring));
                             else options.fillColor(getResources().getColor(R.color.danger));
                             map.addCircle(options);
-//                            map.addMarker(new MarkerOptions()
-//                                    .position(new LatLng(p.getX_cor(), p.getY_cor()))
-//                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_baseline_shopping_basket_24)));
 
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<Place>> call, Throwable t) {
-                        Log.d("generate", t.getMessage());
 
                     }
                 });
-        Log.d("generate", " mistake generate");
     }
+
     // Activates after click on a circle
     @Override
     public void onCircleClick(Circle circle) {
-       selectPlaceOnMap(circle.getCenter());
+        selectPlaceOnMap(circle.getCenter());
     }
 
-    public void routeManager(Intent intent) throws NullPointerException{
-        if(!intent.getStringExtra("place").equals("")){
+    public void routeManager(Intent intent) throws NullPointerException {
+        if (!intent.getStringExtra("place").equals("")) {
             NetworkService.getInstance()
                     .getJSONApi()
-                    .findNearPlace(PrimitiveDAO.getInstance().x,PrimitiveDAO.getInstance().y,intent.getStringExtra("place"))
+                    .findNearPlace(PrimitiveDAO.getInstance().x, PrimitiveDAO.getInstance().y, intent.getStringExtra("place"))
                     .enqueue(new Callback<Place>() {
                         @Override
                         public void onResponse(Call<Place> call, Response<Place> response) {
                             Place p = response.body();
                             ApiService.getInstance()
                                     .getJSONApi()
-                                    .getPlaces(PrimitiveDAO.getInstance().x + ", "+PrimitiveDAO.getInstance().y, p.getX_cor()+", "+p.getY_cor(),intent.getStringExtra("type"),"AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
+                                    .getPlaces(PrimitiveDAO.getInstance().x + ", " + PrimitiveDAO.getInstance().y, p.getX_cor() + ", " + p.getY_cor(), intent.getStringExtra("type"), "AIzaSyD90-d2N-P6nr0amkidJPpmdUWwTjF3VcE")
                                     .enqueue(new Callback<ResponseBody>() {
                                         @Override
                                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -252,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 map.moveCamera(CameraUpdateFactory.zoomTo(15));
                                                 map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(p.getX_cor(), p.getY_cor())));
                                                 map.addPolyline(new PolylineOptions().addAll(cor).width(30).pattern(JSONParser.getPattern(intent.getStringExtra("type"))).color(getResources().getColor(R.color.route)));
-                                                map.addMarker(new MarkerOptions().position(new LatLng(p.getX_cor(), p.getY_cor())).title(p.getName()+"\n"+p.getType()));
+                                                map.addMarker(new MarkerOptions().position(new LatLng(p.getX_cor(), p.getY_cor())).title(p.getName() + "\n" + p.getType()));
                                                 routeInformation.setText(JSONParser.getRouteInformation(response.body().string()));
                                             } catch (Exception e) {
                                                 e.printStackTrace();
@@ -274,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void selectPlaceOnMap(LatLng latLng){
+    public void selectPlaceOnMap(LatLng latLng) {
         map.moveCamera(CameraUpdateFactory.zoomTo(16));
         map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         NetworkService.getInstance()
@@ -284,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onResponse(Call<Place> call, Response<Place> response) {
                         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        name.setText(response.body().getName()+"\n"+response.body().getType());
+                        name.setText(response.body().getName() + "\n" + response.body().getType());
                     }
 
                     @Override

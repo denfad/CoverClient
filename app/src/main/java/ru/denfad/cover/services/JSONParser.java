@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JSONParser {
-    public static List<LatLng> getCoordinates(String json){
+    public static List<LatLng> getCoordinates(String json) {
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
@@ -33,7 +33,7 @@ public class JSONParser {
         return new ArrayList<>();
     }
 
-    public static String getRouteInformation(String json){
+    public static String getRouteInformation(String json) {
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
@@ -53,7 +53,7 @@ public class JSONParser {
         return "Пешком/На такси";
     }
 
-    public static List<PatternItem> getPattern(String type){
+    public static List<PatternItem> getPattern(String type) {
         if ("walking".equals(type)) {
             return Arrays.asList(new Dot(), new Gap(20));
         }

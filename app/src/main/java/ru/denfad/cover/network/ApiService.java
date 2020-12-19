@@ -14,6 +14,7 @@ public class ApiService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
+
     // Realising Singleton pattern
     public static ApiService getInstance() {
         if (mInstance == null) {
@@ -21,6 +22,7 @@ public class ApiService {
         }
         return mInstance;
     }
+
     // Returns interaction with server Interface
     public JSONPlaceHolderApi getJSONApi() {
         return mRetrofit.create(JSONPlaceHolderApi.class);

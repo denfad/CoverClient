@@ -33,7 +33,7 @@ public class StatisticActivity extends AppCompatActivity {
         });
 
         webView = findViewById(R.id.webview);
-        webView.setWebViewClient(new MyWebViewClient(){
+        webView.setWebViewClient(new MyWebViewClient() {
         });
 
 
@@ -45,7 +45,7 @@ public class StatisticActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();

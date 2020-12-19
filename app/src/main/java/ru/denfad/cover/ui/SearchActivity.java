@@ -79,10 +79,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private class ExpListAdapter extends BaseExpandableListAdapter {
 
-        private Map<String, List<Place>>  mGroups;
+        private Map<String, List<Place>> mGroups;
 
 
-        public ExpListAdapter(Map<String, List<Place>>  groups) {
+        public ExpListAdapter(Map<String, List<Place>> groups) {
             mGroups = groups;
         }
 
@@ -112,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         @Override
-        public long getChildId(int groupPosition,  int childPosition) {
+        public long getChildId(int groupPosition, int childPosition) {
             return childPosition;
         }
 
