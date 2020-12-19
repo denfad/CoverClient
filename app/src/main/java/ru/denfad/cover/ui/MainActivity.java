@@ -25,6 +25,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.Dash;
@@ -50,7 +52,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -80,7 +84,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private GoogleMap map;
     private BottomSheetBehavior mBottomSheetBehavior;
+    private static Map<String, Integer> imageMapPlace = new HashMap<>();
     private double x,y;
+
+    static {
+        imageMapPlace.put("Магазин",R.drawable.ic_baseline_shopping_basket_24);
+        imageMapPlace.put("Аптека",R.drawable.ic_baseline_local_pharmacy_24);
+        imageMapPlace.put("Больница",R.drawable.ic_baseline_local_hospital_24);
+        imageMapPlace.put("Гос. учреждение",R.drawable.ic_baseline_account_balance_24);
+        imageMapPlace.put("Школа",R.drawable.ic_baseline_school_24);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,10 +192,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(56.857159, 35.914097)));
-        map.moveCamera(CameraUpdateFactory.zoomTo(5));
         setUpMap();
         generateArea();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.857730, 35.915329),12));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -203,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
     //Generates areas of infection
     public void generateArea(){
+        Log.d("generate", "generate");
         NetworkService.getInstance()
                 .getJSONApi()
                 .getPlaces()
@@ -219,14 +233,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             else if(p.getCoefficient()>=0.33 && p.getCoefficient()<=0.66) options.fillColor(getResources().getColor(R.color.warring));
                             else options.fillColor(getResources().getColor(R.color.danger));
                             map.addCircle(options);
+//                            map.addMarker(new MarkerOptions()
+//                                    .position(new LatLng(p.getX_cor(), p.getY_cor()))
+//                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_baseline_shopping_basket_24)));
+
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<Place>> call, Throwable t) {
+                        Log.d("generate", t.getMessage());
 
                     }
                 });
+        Log.d("generate", " mistake generate");
     }
     // Activates after click on a circle
     @Override
@@ -265,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                         @Override
                                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                                            t.getLocalizedMessage();
                                         }
                                     });
                         }
@@ -293,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     @Override
                     public void onFailure(Call<Place> call, Throwable t) {
-
+                        t.getLocalizedMessage();
                     }
                 });
     }

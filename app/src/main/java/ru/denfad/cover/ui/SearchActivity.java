@@ -2,10 +2,12 @@ package ru.denfad.cover.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
@@ -39,6 +41,14 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place_search_activity);
 
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         listView = findViewById(R.id.expListView);
 
         ExpListAdapter adapter = new ExpListAdapter(data);
@@ -54,12 +64,12 @@ public class SearchActivity extends AppCompatActivity {
                         public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
                             data.add(response.body());
                             adapter.notifyDataSetChanged();
-                            System.out.println(Arrays.asList(response.body()));
+
                         }
 
                         @Override
                         public void onFailure(Call<List<Place>> call, Throwable t) {
-
+                            t.getLocalizedMessage();
                         }
                     });
         }
@@ -102,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         @Override
-        public long getChildId(int groupPosition, int childPosition) {
+        public long getChildId(int groupPosition,  int childPosition) {
             return childPosition;
         }
 
@@ -153,6 +163,7 @@ public class SearchActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Person> call, Response<Person> response) {
                                     Toast.makeText(getApplicationContext(), "Вы удачно добавили часто посещаемое место!", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
                                 }
 
                                 @Override
