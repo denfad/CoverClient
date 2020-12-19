@@ -33,7 +33,8 @@ public class CallAmbulanceActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+               startActivity(new Intent(CallAmbulanceActivity.this, MainActivity.class));
+
             }
         });
 

@@ -47,12 +47,12 @@ public class RegistrationActivity extends AppCompatActivity {
                             public void onResponse(Call<Person> call, Response<Person> response) {
                                 PrimitiveDAO.getInstance().person = response.body();
                                 Toast.makeText(getApplicationContext(),"Добро пожаловать в Caver "+response.body().getName(), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                startActivity(new Intent(RegistrationActivity.this, EducationActivity.class));
                             }
 
                             @Override
                             public void onFailure(Call<Person> call, Throwable t) {
-                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                startActivity(new Intent(RegistrationActivity.this, EducationActivity.class));
                             }
                         });
 
