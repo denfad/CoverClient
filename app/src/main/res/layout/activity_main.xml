@@ -26,7 +26,7 @@
         <ImageButton
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_baseline_home_24"
+                android:src="@drawable/ic_baseline_search_24"
                 android:id="@+id/search"
                 android:backgroundTint="#00000000"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,17 +83,13 @@
                     android:backgroundTint="#FFFFFF">
 
                 <TextView
-
                         android:id="@+id/name"
-                        android:background="@drawable/behavior_rectangle"
-                        android:backgroundTint="#88ABB3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Парк"
                         android:fontFamily="@font/regular"
-                        android:textColor="#000000"
-                        android:elevation="2dp"
+                        android:textColor="#2C2C2C"
                         android:padding="10dp"
                         android:textSize="30sp"
                         android:textStyle="bold" />

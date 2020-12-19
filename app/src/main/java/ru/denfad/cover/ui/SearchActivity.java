@@ -34,7 +34,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private ExpandableListView listView;
     private static final String[] types = new String[]{"Магазин", "Больница", "Общественное место", "Аптека", "Гос. учреждение"};
-    private ArrayList<List<Place>> data = new ArrayList<List<Place>>();
+    private Map<String, List<Place>> data = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
                     .enqueue(new Callback<List<Place>>() {
                         @Override
                         public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
-                            data.add(response.body());
+                            data.put(response.body().get(0).getType(), response.body());
                             adapter.notifyDataSetChanged();
 
                         }
@@ -79,10 +79,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private class ExpListAdapter extends BaseExpandableListAdapter {
 
-        private ArrayList<List<Place>> mGroups;
+        private Map<String, List<Place>>  mGroups;
 
 
-        public ExpListAdapter(ArrayList<List<Place>> groups) {
+        public ExpListAdapter(Map<String, List<Place>>  groups) {
             mGroups = groups;
         }
 
@@ -93,17 +93,17 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return mGroups.get(groupPosition).size();
+            return mGroups.get(types[groupPosition]).size();
         }
 
         @Override
         public Object getGroup(int groupPosition) {
-            return mGroups.get(groupPosition);
+            return mGroups.get(types[groupPosition]);
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return mGroups.get(groupPosition).get(childPosition);
+            return mGroups.get(types[groupPosition]).get(childPosition);
         }
 
         @Override
@@ -149,13 +149,13 @@ public class SearchActivity extends AppCompatActivity {
             }
 
             TextView textChild = (TextView) convertView.findViewById(R.id.place_text);
-            textChild.setText(mGroups.get(groupPosition).get(childPosition).getName());
+            textChild.setText(mGroups.get(types[groupPosition]).get(childPosition).getName());
 
             textChild.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Person p = PrimitiveDAO.getInstance().person;
-                    p.addPlace(mGroups.get(groupPosition).get(childPosition));
+                    p.addPlace(mGroups.get(types[groupPosition]).get(childPosition));
                     NetworkService.getInstance()
                             .getJSONApi()
                             .updatePerson(p)
