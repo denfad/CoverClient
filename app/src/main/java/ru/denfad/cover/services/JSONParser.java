@@ -54,11 +54,9 @@ public class JSONParser {
     }
 
     public static List<PatternItem> getPattern(String type){
-        switch (type){
-            case "walking":
-                return  Arrays.asList(new Dot(),new Gap(20));
-            default:
-                return Arrays.asList(new Dash(20));
+        if ("walking".equals(type)) {
+            return Arrays.asList(new Dot(), new Gap(20));
         }
+        return Arrays.asList(new Dash(20));
     }
 }

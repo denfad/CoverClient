@@ -35,7 +35,6 @@
         </activity>
         <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.ActionsActivity" />
-        <activity android:name=".ui.route.SafelyRouteTypeActivity" />
         <activity android:name=".ui.route.RouteTypeActivity" />
         <activity android:name=".ui.route.RoutePlaceActivity" />
         <activity android:name=".ui.advice.AdvicesActivity" />

@@ -13,10 +13,11 @@ import ru.denfad.cover.ui.route.RoutePlaceActivity;
 
 public class ActionsActivity extends AppCompatActivity {
 
-    private  Button backButton;
+    private Button backButton;
     private Button placeButton;
     private Button adviceButton;
     private Button callButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,7 @@ public class ActionsActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                startActivity(new Intent(ActionsActivity.this, MainActivity.class));
             }
         });
 
@@ -37,7 +38,6 @@ public class ActionsActivity extends AppCompatActivity {
                 startActivity(new Intent(ActionsActivity.this, CallAmbulanceActivity.class));
             }
         });
-
 
 
         placeButton = findViewById(R.id.get_place);

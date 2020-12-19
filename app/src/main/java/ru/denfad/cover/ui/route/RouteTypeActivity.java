@@ -23,7 +23,8 @@ public class RouteTypeActivity extends AppCompatActivity {
         safely.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(RouteTypeActivity.this, SafelyRouteTypeActivity.class);
+                intent.putExtra("type", "walking");
+                intent.setClass(RouteTypeActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
