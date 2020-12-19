@@ -46,6 +46,20 @@
             android:layout_marginBottom="10dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/statistic"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="Статистика"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:background="@drawable/menu_rectangle"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/get_advice"
             android:textSize="30sp"
             android:layout_weight="1"

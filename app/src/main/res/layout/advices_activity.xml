@@ -29,6 +29,16 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
 
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabDots"
+            app:tabBackground="@drawable/tab_selector"
+            android:backgroundTint="#0088ABB3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"/>
+
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back"
             android:textSize="30sp"

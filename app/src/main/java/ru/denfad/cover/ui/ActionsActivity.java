@@ -17,6 +17,7 @@ public class ActionsActivity extends AppCompatActivity {
     private Button placeButton;
     private Button adviceButton;
     private Button callButton;
+    private Button statisticButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,14 @@ public class ActionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ActionsActivity.this, CallAmbulanceActivity.class));
+            }
+        });
+
+        statisticButton = findViewById(R.id.statistic);
+        statisticButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActionsActivity.this, StatisticActivity.class));
             }
         });
 

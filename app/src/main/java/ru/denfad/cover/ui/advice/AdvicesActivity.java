@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,13 @@ public class AdvicesActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        TabLayout tabLayout = findViewById(R.id.tabDots);
+        new TabLayoutMediator(tabLayout, pager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    }
+                }).attach();
     }
 
     private class ViewPagerAdapter extends RecyclerView.Adapter<PagerVH>{
